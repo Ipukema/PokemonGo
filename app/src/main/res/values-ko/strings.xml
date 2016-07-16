@@ -6,7 +6,8 @@
     <string name="menu02">상점 안내</string>
     <string name="menu03">용어</string>
     <string name="menu04">커뮤니티</string>
-    <string name="menu05">개발자</string>
+    <string name="menu05">인벤</string>
+    <string name="menu06">문의</string>
 
     <string name="glossary_title01">향기</string>
     <string name="glossary_title02">알</string>

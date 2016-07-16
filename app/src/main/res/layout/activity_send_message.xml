@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SendMessageActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="   ◆ 사용자 메일주소"
+            android:textSize="17dp"
+            android:background="#E0E0E0"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+        <EditText
+            android:id="@+id/user_mail"
+            android:paddingLeft="8dp"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:textColorHint="#55000000"
+            android:hint="답변을 받고싶다면 메일주소를 입력하세요."
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+        <TextView
+            android:text="   ◆ 제목"
+            android:textSize="17dp"
+            android:background="#E0E0E0"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+        <EditText
+            android:id="@+id/msg_title"
+            android:paddingLeft="8dp"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:textColorHint="#55000000"
+            android:hint="제목을 입력하세요"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+        <TextView
+            android:text="   ◆ 내용"
+            android:textSize="17dp"
+            android:background="#E0E0E0"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+        <EditText
+            android:id="@+id/msg_info"
+            android:paddingLeft="8dp"
+            android:gravity="top"
+            android:background="@null"
+            android:textColorHint="#55000000"
+            android:hint="내용을 입력하세요\n게시판이 아니며, 포켓몬Go 개발자에게 보내는 곳이 아닌 본 어플을 개발한 개발자에게 문의 및 건의사항을 보내는 곳입니다."
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/send_button"
+        android:layout_margin="32dp"
+        android:layout_gravity="right|bottom"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+</FrameLayout>

@@ -1,4 +1,4 @@
-package nextus.restartallkill.pokemongo;
+package nextus.restartallkill.pokemongo.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +7,14 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import nextus.restartallkill.pokemongo.R;
+import nextus.restartallkill.pokemongo.RecyclerViewAdapter;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
 
-public class GlossaryActivity extends CycleControllerActivity {
+public class TermActivity extends CycleControllerActivity {
 
-    @DeclareView(id=R.id.recyclerView) RecyclerView recyclerView;
+    @DeclareView(id= R.id.recyclerView) RecyclerView recyclerView;
     @DeclareView(id=R.id.adView) AdView adView;
 
     RecyclerViewAdapter recyclerViewAdapter;
@@ -23,13 +25,14 @@ public class GlossaryActivity extends CycleControllerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glossary, true);
 
+        getSupportActionBar().setTitle(getString(R.string.menu03));
 
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this, 0);
+        recyclerViewAdapter = new RecyclerViewAdapter(this, 2);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         AdRequest adRequest = new AdRequest.Builder().build();

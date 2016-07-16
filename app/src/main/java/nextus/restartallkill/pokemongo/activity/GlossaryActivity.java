@@ -1,4 +1,4 @@
-package nextus.restartallkill.pokemongo;
+package nextus.restartallkill.pokemongo.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +7,14 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import nextus.restartallkill.pokemongo.R;
+import nextus.restartallkill.pokemongo.RecyclerViewAdapter;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
 
-public class TermActivity extends CycleControllerActivity {
+public class GlossaryActivity extends CycleControllerActivity {
 
-    @DeclareView(id=R.id.recyclerView) RecyclerView recyclerView;
+    @DeclareView(id= R.id.recyclerView) RecyclerView recyclerView;
     @DeclareView(id=R.id.adView) AdView adView;
 
     RecyclerViewAdapter recyclerViewAdapter;
@@ -29,7 +31,7 @@ public class TermActivity extends CycleControllerActivity {
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this, 2);
+        recyclerViewAdapter = new RecyclerViewAdapter(this, 0);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         AdRequest adRequest = new AdRequest.Builder().build();
