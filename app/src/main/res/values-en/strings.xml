@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PokemonGo</string>
+    <string name="banner_ad_unit_id">ca-app-pub-4149992927097425/6809103790</string>
+
+    <string name="menu01">Pokedex</string>
+    <string name="menu02">Glossary</string>
+    <string name="menu03">Term</string>
+    <string name="menu04">Community</string>
+    <string name="menu05">Questions</string>
+
+    <string name="glossary_title01">Incense</string>
+    <string name="glossary_title02">Eggs</string>
+    <string name="glossary_title03">Lucky Eggs</string>
+    <string name="glossary_title04">Poke Balls</string>
+    <string name="glossary_title05">Incubator</string>
+    <string name="glossary_title06">Lure Module</string>
+    <string name="glossary_title07">Potions</string>
+    <string name="glossary_title08">Razz berry</string>
+    <string name="glossary_info01">Incense attracts wild Pokémon to your location with its aromatic scent.</string>
+    <string name="glossary_info02">Pokémon Eggs are items that can be found at PokéStops. Once you place an Egg in an incubator and walk a specific distance, the Egg will hatch into a Pokémon.</string>
+    <string name="glossary_info03">You can double the amount of XP you earn in a certain amount of time by using a Lucky Egg.</string>
+    <string name="glossary_info04">Poké Balls are items used to capture wild Pokémon. They can be found at PokéStops and purchased in the shop.</string>
+    <string name="glossary_info05">Placing an Egg into an incubator allows it to hatch into a Pokémon as you walk.</string>
+    <string name="glossary_info06">You can attract wild Pokémon to a PokéStop for a limited time with a Lure Module.</string>
+    <string name="glossary_info07">There are various Potions you can use to heal Pokémon. These items restore their HP (Hit Points).</string>
+    <string name="glossary_info08">During an encounter, you can feed this item to a wild Pokémon to make it easier to catch.</string>
+    <string name="term_title01">Battle</string>
+    <string name="term_title02">Combat Power (CP)</string>
+    <string name="term_title03">Defender Bonus</string>
+    <string name="term_title04">Evolution</string>
+    <string name="term_title05">Experience Points (XP)</string>
+    <string name="term_title06">Fainted Pokémon</string>
+    <string name="term_title07"></string>
+    <string name="term_title08"></string>
+    <string name="term_title09"></string>
+    <string name="term_title10"></string>
+    <string name="term_title11"></string>
+
+
+</resources>
