@@ -58,6 +58,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/send_button"
+        android:src="@android:drawable/ic_dialog_email"
+        android:scaleType="fitXY"
         android:layout_margin="32dp"
         android:layout_gravity="right|bottom"
         android:layout_width="50dp"

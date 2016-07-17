@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import nextus.restartallkill.pokemongo.BlogItem;
 import nextus.restartallkill.pokemongo.BoardItem;
 
 /**
@@ -19,6 +20,7 @@ public class MyApplication extends Application {
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     public static BoardItem boardItem;
+    public static BlogItem blogItem;
 
 
     @Override

@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import nextus.restartallkill.pokemongo.BlogItem;
 import nextus.restartallkill.pokemongo.BoardItem;
 
 /**

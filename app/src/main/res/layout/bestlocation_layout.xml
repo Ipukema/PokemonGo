@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <nextus.restartallkill.pokemongo.util.FadeInNetworkImageView
+        android:id="@+id/bl_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/bl_title"
+        android:background="#22000000"
+        android:text="속초맛집~ 장사항 바다보며 횟집에서 꿀포식!"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+
+</FrameLayout>

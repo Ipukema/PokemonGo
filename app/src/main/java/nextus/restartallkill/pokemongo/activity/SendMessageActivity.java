@@ -71,12 +71,21 @@ public class SendMessageActivity extends CycleControllerActivity implements View
         MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
 
+    private void reset()
+    {
+        user_mail.setText(null);
+        msg_info.setText(null);
+        msg_title.setText(null);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId())
         {
             case R.id.send_button:
                 sendData();
+                reset();
+                Toast.makeText(this,"전송되었습니다.",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

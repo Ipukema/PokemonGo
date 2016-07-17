@@ -17,31 +17,73 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/pokedex"
-            android:foreground="?android:attr/selectableItemBackground"
-            card_view:cardBackgroundColor="@android:color/transparent"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="3dp"
-            android:clickable="true"
-            android:background="#f44336"
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="100dp">
-            <LinearLayout
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/pokedex"
+                android:layout_marginRight="8dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@android:color/transparent"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="3dp"
+                android:clickable="true"
                 android:background="#f44336"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:text="@string/menu01"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:background="#f44336"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:text="@string/menu01"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/bestLocation"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@android:color/transparent"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="3dp"
+                android:clickable="true"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:background="#FFEB3B"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:text="속초 맛집"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_marginTop="16dp"
@@ -57,7 +99,7 @@
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="3dp"
                 android:background="@color/colorPrimary"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
@@ -83,6 +125,7 @@
                 </FrameLayout>
 
             </android.support.v7.widget.CardView>
+
 
             <android.support.v7.widget.CardView
                 android:id="@+id/term"

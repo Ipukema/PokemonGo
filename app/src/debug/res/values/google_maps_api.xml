@@ -1,0 +1,21 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=2F:9E:68:75:37:D7:53:FA:35:89:E2:A3:5E:B4:88:A0:BE:A8:6F:E4%3Bnextus.restartallkill.pokemongo.activity
+
+    You can also add your credentials to an existing key, using this line:
+    2F:9E:68:75:37:D7:53:FA:35:89:E2:A3:5E:B4:88:A0:BE:A8:6F:E4;nextus.restartallkill.pokemongo.activity
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCzZaTUHFvGtnaJbCUnX2kemYH3JlLhVds
+    </string>
+</resources>

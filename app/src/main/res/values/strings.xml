@@ -1,98 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">PokemonGo</string>
+    <string name="app_name">포켓몬가이드</string>
     <string name="banner_ad_unit_id">ca-app-pub-4149992927097425/6809103790</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
-        "Material is the metaphor.\n\n"
-
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
-        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
-        "technologically advanced and open to imagination and magic.\n"
-        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
-        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
-        "world, without breaking the rules of physics.\n"
-        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
-        "interact, and exist in space and in relation to each other. Realistic lighting shows "
-        "seams, divides space, and indicates moving parts.\n\n"
-
-        "Bold, graphic, intentional.\n\n"
-
-        "The foundational elements of print based design typography, grids, space, scale, color, "
-        "and use of imagery guide visual treatments. These elements do far more than please the "
-        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
-        "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the user in the experience.\n"
-        "An emphasis on user actions makes core functionality immediately apparent and provides "
-        "waypoints for the user.\n\n"
-
-        "Motion provides meaning.\n\n"
-
-        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
-        "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the user without "
-        "breaking the continuity of experience even as they transform and reorganize.\n"
-        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
-
-        "3D world.\n\n"
-
-        "The material environment is a 3D space, which means all objects have x, y, and z "
-        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
-        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
-        "position along the z-axis and has a standard 1dp thickness.\n"
-        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
-        "emulated by manipulating the y-axis.\n\n"
-
-        "Light and shadow.\n\n"
-
-        "Within the material environment, virtual lights illuminate the scene. Key lights create "
-        "directional shadows, while ambient light creates soft shadows from all angles.\n"
-        "Shadows in the material environment are cast by these two light sources. In Android "
-        "development, shadows occur when light sources are blocked by sheets of material at "
-        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
-        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
-
-        "Resting elevation.\n\n"
-
-        "All material objects, regardless of size, have a resting elevation, or default elevation "
-        "that does not change. If an object changes elevation, it should return to its resting "
-        "elevation as soon as possible.\n\n"
-
-        "Component elevations.\n\n"
-
-        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
-        "does not vary from 6dp in one app to 16dp in another app).\n"
-        "Components may have different resting elevations across platforms, depending on the depth "
-        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
-
-        "Responsive elevation and dynamic elevation offsets.\n\n"
-
-        "Some component types have responsive elevation, meaning they change elevation in response "
-        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
-        "changes are consistently implemented using dynamic elevation offsets.\n"
-        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
-        "across actions and component types. For example, all components that lift on press have "
-        "the same elevation change relative to their resting elevation.\n"
-        "Once the input event is completed or cancelled, the component will return to its resting "
-        "elevation.\n\n"
-
-        "Avoiding elevation interference.\n\n"
-
-        "Components with responsive elevations may encounter other components as they move between "
-        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
-        "through other material, components avoid interfering with one another any number of ways, "
-        "whether on a per component basis or using the entire app layout.\n"
-        "On a component level, components can move or be removed before they cause interference. "
-        "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "user picks up a card, or it can move if a snackbar appears.\n"
-        "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a user tries to pick up one of cards.\n\n"
-    </string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_board">BoardActivity</string>
+    <string name="menu01">포켓몬 도감</string>
+    <string name="menu02">상점 안내</string>
+    <string name="menu03">용어</string>
+    <string name="menu04">커뮤니티</string>
+    <string name="menu05">인벤</string>
+    <string name="menu06">문의</string>
+
+    <string name="glossary_title01">향기</string>
+    <string name="glossary_title02">알</string>
+    <string name="glossary_title03">행운의 알</string>
+    <string name="glossary_title04">포켓볼</string>
+    <string name="glossary_title05">인큐베이터</string>
+    <string name="glossary_title06">유도 시스템</string>
+    <string name="glossary_title07">포션</string>
+    <string name="glossary_title08">라즈베리</string>
+
+    <string name="glossary_info01">향기는 야생포켓몬을 자극 시켜 여러분 곁으로 다가오게 만듭니다.</string>
+    <string name="glossary_info02">포켓몬 알은 상점에서 구매 하실 수 있습니다. 인큐베이터에서 알을 넣고 특정 거리를 산책하면, 알은 포켓몬스터로 부화합니다.</string>
+    <string name="glossary_info03">행운의 알을 이용하시면 30분 동안 취득하는 경험치의 양을 두 배로 늘릴 수 있습니다.</string>
+    <string name="glossary_info04">야생 포켓몬을 포획 할 때 사용하는 아이템입니다. 상점에서 구입하실 수 있습니다. 그레이트볼, 울트라볼, 그리고 마스터볼은 야생 포켓몬을 잡을 때 더 편리 하게 잡을 수 있는 고성능 볼입니다.</string>
+    <string name="glossary_info05">인큐베이터에 달걀을 넣어서 걸어다니시면 포켓몬알에서 포켓몬을 부화 할 수 있습니다.</string>
+    <string name="glossary_info06">포켓스탑에서 유도 시스템을 이용하면 30분동안 야생 포켓몬의 출현 확률을 높일 수 있습니다.</string>
+    <string name="glossary_info07">포켓몬을 치료할 수 있는 다양한 포션이 있습니다. 포션은 HP (체력)을 회복시킵니다. 기본 포션은 20만큼 회복시킵니다.</string>
+    <string name="glossary_info08">야생 포켓몬을 잡을 확률을 높여주는 아이템입니다. 포켓몬 게임 사파리 투어에서 이용했던 방식과 유사합니다.</string>
+
+    <string name="term_title01">포켓몬 대결</string>
+    <string name="term_title02">CP(CombatPower) 전투력</string>
+    <string name="term_title03">진화</string>
+    <string name="term_title04">사탕</string>
+    <string name="term_title05">경험치</string>
+    <string name="term_title06">기절한 포켓몬</string>
+    <string name="term_title07">체육관</string>
+    <string name="term_title08">HP 체력</string>
+    <string name="term_title09">메달</string>
+    <string name="term_title10">포켓코인</string>
+    <string name="term_title11">포켓몬 도감</string>
+    <string name="term_title12">상점</string>
+    <string name="term_title13">강화</string>
+    <string name="term_title14">명성</string>
+    <string name="term_title15">스타더스트</string>
+    <string name="term_title16">디펜더 보너스</string>
+    <string name="term_title17">훈련</string>
+    <string name="term_title18">트레이너</string>
+    <string name="term_title19">야생 포켓몬</string>
+
+    <string name="term_info01">경쟁 체육관에서, 여러분은 포켓몬 대결을 신청하실 수 있습니다. 대결에서 이기시면 상대 체육관의 명성을 낮출 수 있으시며 체육관 레벨을 낮출 수 있습니다. 그럼으로써 체육관 수준이 상당 부분 내려갔을 경우 여러분은 그 체육관을 차지 하실 수 있습니다.</string>
+    <string name="term_info02">포켓몬의 공격력은 전투력 단위로 측정된다. 포켓몬의 전투력은 전투에서 효율적으로 싸우는 방법을 잘 결정한다.</string>
+    <string name="term_info03">사탕을 이용 함으로써 여러분은 포켓몬을 진화 시킬 수 있습니다.</string>
+    <string name="term_info04">여러분은 포켓몬을 잡거나 달걀을 부화시키거나 포켓몬교수께 전송 시킴으로써 사탕을 획득 하 실수 있습니다.</string>
+    <string name="term_info05">트레이너를 측정 하는 방법 중 하나입니다. 높은 트레이너 수준으로 발전하기 위해서는 경험치를 쌓아야 합니다.</string>
+    <string name="term_info06">HP가 0이된 포켓몬이 기절합니다. 포켓몬은 아이템을 사용 함으로써 회복 시키실 수 있습니다.</string>
+    <string name="term_info07">체육관은 라이벌 팀과 포켓몬 전투를 할 수 있는 곳입니다. 또한 포켓몬을 다른 포켓몬과 싸우게 함으로써 훈련시킬 수 있는 곳입니다. 체육관은 여러 종류로 나뉩니다. 여러분 팀이 가지고있으면 친숙한 체육관 그럴 경우가 아닌 경우 라이벌 체육관으로 됩니다. 아직 차지 못한 체육관의 경우 공개 체육관으로 되어 있습니다. </string>
+    <string name="term_info08">포켓몬의 건강은 체력 (HP으)로 측정됩니다. HP가 0이되면 포켓몬은 기절하며. 기절한 포켓몬을 회복시키려면 부활 혹은 최대부활을 사용하셔야 합니다. </string>
+    <string name="term_info09">메달은 게임 플레이 성과에 따라 여러분에게 수여됩니다.</string>
+    <string name="term_info10">포켓코인은 트레이너가 상점에서 프리미엄 항목을 이용할 때 쓰는 통화입니다. 상점에서 포켓코인을 구입할 수 있습니다</string>
+    <string name="term_info11">포켓몬도감에는 여러분이 찾은 포켓몬에 대한 정보를 담고 있습니다. </string>
+    <string name="term_info12">상점에서 여러분은 포켓볼, 포션 그리고 포켓몬 알을 구매 하실 수 있습니다. 상점은 여러분이 근거리에 있을 때 그 모양이 변합니다. 터치를 함으로써 이용 하실 수 있습니다. Photo Disc을 회전시키시면 아이템을 얻을 수 있습니다.</string>
+    <string name="term_info13">스타 더스트와 사탕을 사용함으로써 포켓몬의 CP와 HP를 증가시킬 수 있습니다.</string>
+    <string name="term_info14">명성은 체육관의 능력을 측정하는 단위입니다. 명성은 체육관에서 때 포켓몬을 훈련할 때 적립됩니다. 높은 수준의 체육관이 되는 방법은 명성을 높이는 것입니다.</string>
+    <string name="term_info15">스타더스트는 포켓몬을 잡거나, 달걀을 부화하거나, 디펜드 보너스를 적립하여 취득 할 수 있다. 그것으로 여러분은 포켓몬을 강화 할 수 있습니다.</string>
+    <string name="term_info16">체육관 관장으로 있는 여러분이 도전자의 도전을 막아냈을 때 얻는 포인트입니다. 여러분이 체육관으로 있으면 스타더스트와 포켓몬코인을 일일 보상으로 받을 수 있습니다. 상점으로 들어가면 우측 상단에서 확인 할 수 있습니다.</string>
+    <string name="term_info17">트레이너들은 선택한 포켓몬의 경험치를 쌓을 수 있으며, 체육관의 명성을 높이기 위해 상대방과 체육관에서 대결을 할 수 있습니다.</string>
+    <string name="term_info18">포켓몬 GO를 하는 당신! 당신이 트레이너입니다.</string>
+    <string name="term_info19">포획 하지 못한 자연 상태의 포켓몬은 야생 포켓몬으로 불립니다.</string>
+    <string name="title_activity_maps">Map</string>
+
 
 </resources>

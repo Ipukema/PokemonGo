@@ -72,7 +72,6 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             board_img = (NetworkImageView) itemView.findViewById(R.id.board_img);
             user_icon = (ImageView) itemView.findViewById(R.id.user_icon);
         }
-
     }
 
 

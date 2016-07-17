@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">포켓몬가이드</string>
     <string name="banner_ad_unit_id">ca-app-pub-4149992927097425/6809103790</string>
+    <string name="title_activity_board">BoardActivity</string>
     <string name="menu01">포켓몬 도감</string>
     <string name="menu02">상점 안내</string>
     <string name="menu03">용어</string>
