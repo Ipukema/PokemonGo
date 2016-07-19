@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nextus.restartallkill.pokemongo.activity.CreateContentsActiity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="1. 제목 (필수)"
+                android:background="@color/common_plus_signin_btn_text_dark_disabled"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <EditText
+                android:id="@+id/title"
+                android:background="@null"
+                android:hint="제목을 입력하세요."
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="2. 내용 (필수)"
+                android:background="@color/common_plus_signin_btn_text_dark_disabled"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <EditText
+                android:id="@+id/info"
+                android:background="@null"
+                android:hint="내용을 입력하세요"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"/>
+            <TextView
+                android:text="3. 이미지 추가"
+                android:background="@color/common_plus_signin_btn_text_dark_disabled"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <ImageView
+                    android:src="@android:drawable/ic_input_add"
+                    android:id="@+id/addImg01"
+                    android:scaleType="centerCrop"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+                <ImageView
+                    android:src="@android:drawable/ic_input_add"
+                    android:id="@+id/addImg02"
+                    android:scaleType="centerCrop"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+                <ImageView
+                    android:src="@android:drawable/ic_input_add"
+                    android:id="@+id/addImg03"
+                    android:scaleType="centerCrop"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/addImgRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

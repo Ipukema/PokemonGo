@@ -51,14 +51,9 @@ public class BestLocationActivity extends CycleControllerActivity {
         dialog.show();
         getBlogData();
 
-
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-
-
-
-
     }
 
     public void getBlogData()

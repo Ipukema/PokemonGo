@@ -24,10 +24,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
@@ -68,13 +70,13 @@ public class MainActivity extends CycleControllerActivity implements View.OnClic
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-
-
         getData();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
+              //  .requestEmail()
                 .build();
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -84,13 +86,10 @@ public class MainActivity extends CycleControllerActivity implements View.OnClic
                 //.addScope(Plus.SCOPE_PLUS_PROFILE)
                 .build();
 
-
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-
-
     }
 
     public void getData()
@@ -152,10 +151,9 @@ public class MainActivity extends CycleControllerActivity implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.developer:
-                intent = new Intent(this, SendMessageActivity.class);
+                intent = new Intent(this, CreateContentsActiity.class);
                 startActivity(intent);
                 break;
-
             case R.id.bestLocation:
                 intent = new Intent(this, BestLocationActivity.class);
                 startActivity(intent);
