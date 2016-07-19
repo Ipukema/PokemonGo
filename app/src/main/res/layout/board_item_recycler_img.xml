@@ -3,56 +3,92 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/placeCard"
-    android:layout_margin="8dp"
-    android:layout_width="wrap_content"
+    android:layout_margin="3dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="@dimen/cardview_default_radius"
+    card_view:cardCornerRadius="5dp"
     card_view:cardElevation="@dimen/cardview_default_elevation">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <nextus.restartallkill.pokemongo.util.FadeInNetworkImageView
             android:id="@+id/board_img"
             android:src="@drawable/common_google_signin_btn_icon_dark_normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxHeight="200dp"
+            />
         <LinearLayout
             android:layout_margin="8dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:textSize="12dp"
+                android:textColor="#000000"
                 android:id="@+id/board_title"
                 android:text="Wake Up me"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginTop="8dp"
-                android:maxLines="1"
-                android:id="@+id/board_info"
-                android:text="이 의장은 “유튜브가 국내 동영상 시장을 가져갔고, 구글 플레이에서도 많은 돈을 벌고 있는데 (한국인들은) 구글이 얼마를 버는지, 세"
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="10dp">
+                <TextView
+                    android:gravity="center"
+                    android:textSize="8dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="조회수 158"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <View
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:background="@color/cardview_dark_background"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:gravity="center"
+                    android:textSize="8dp"
+                    android:text="댓글수 0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <View
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:background="@color/cardview_dark_background"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:gravity="center"
+                    android:textSize="8dp"
+                    android:text="추천 2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
         </LinearLayout>
+
         <View
-            android:background="#000000"
+            android:background="#E0E0E0"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_margin="8dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <nextus.restartallkill.pokemongo.util.FadeInNetworkImageView
+            android:layout_height="40dp">
+            <ImageView
                 android:id="@+id/user_icon"
-                android:src="@drawable/common_ic_googleplayservices"
+                android:src="@drawable/common_plus_signin_btn_icon_dark_normal"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             <LinearLayout
+                android:layout_marginLeft="5dp"
                 android:orientation="vertical"
                 android:layout_weight="4"
                 android:layout_width="0dp"
@@ -64,9 +100,11 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/date"
+                    android:textSize="10dp"
                     android:text="2016.07.16  20:19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

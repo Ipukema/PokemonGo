@@ -9,13 +9,22 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import nextus.restartallkill.pokemongo.BlogItem;
 import nextus.restartallkill.pokemongo.BlogRecyclerAdapter;
 import nextus.restartallkill.pokemongo.R;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
+import nextus.restartallkill.pokemongo.util.CustomRequest;
 import nextus.restartallkill.pokemongo.util.MyApplication;
 
 public class BestLocationActivity extends CycleControllerActivity {
@@ -25,7 +34,7 @@ public class BestLocationActivity extends CycleControllerActivity {
 
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     BlogRecyclerAdapter recyclerViewAdapter;
-
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +46,57 @@ public class BestLocationActivity extends CycleControllerActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
+        dialog = ProgressDialog.show(this, "","Loading..Wait.." , true);
+        dialog.setIndeterminate(true);
+        dialog.show();
+        getBlogData();
+
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
-        recyclerViewAdapter = new BlogRecyclerAdapter(this, 1);
-        recyclerView.setAdapter(recyclerViewAdapter);
 
-        recyclerViewAdapter.setOnItemClickListener(onItemClickListener);
 
+
+    }
+
+    public void getBlogData()
+    {
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("id", "sef");
+
+        String url = "http://125.209.193.163/pokemongo/getBestLocation.jsp";
+
+        final CustomRequest<BlogItem> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param,
+                BlogItem.class, //Not null.
+                new Response.Listener<BlogItem>() {
+                    @Override
+                    public void onResponse(BlogItem response) {
+                        try {
+                            MyApplication.getInstance().blogItem = response;
+                            dialog.dismiss();
+                            Log.e("Test:",response.getBlogData().get(0).getBl_img());
+                            recyclerViewAdapter = new BlogRecyclerAdapter(getApplicationContext(), 1);
+                            recyclerViewAdapter.setOnItemClickListener(onItemClickListener);
+                            recyclerView.setAdapter(recyclerViewAdapter);
+                            recyclerView.notifyAll();
+                            //recyclerViewAdapter.notifyDataSetChanged();
+
+                            //MySingletonOld.dinosaursBasicData.getData().addAll(response.getData());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ERROR", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
 
     BlogRecyclerAdapter.OnItemClickListener onItemClickListener = new BlogRecyclerAdapter.OnItemClickListener(){

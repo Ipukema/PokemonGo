@@ -39,8 +39,9 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.blog_img.setScaleType(ImageView.ScaleType.FIT_XY);
         holder.blog_img.setImageUrl(MyApplication.getInstance().blogItem.getBlogData().get(position).getBl_img(), MyApplication.getInstance().getImageLoader());
+
         holder.title.setText(MyApplication.getInstance().blogItem.getBlogData().get(position).bl_title);
-        holder.count.setText("조회수 "+MyApplication.getInstance().blogItem.getBlogData().get(position).bl_count);
+    //    holder.count.setText("조회수 "+MyApplication.getInstance().blogItem.getBlogData().get(position).bl_count);
         holder.date.setText(MyApplication.getInstance().blogItem.getBlogData().get(position).bl_date);
     }
 
@@ -69,6 +70,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         public ImageView user_icon;
 */
         public NetworkImageView blog_img;
+
         public CardView place_holder;
         public TextView title;
         public TextView count;
@@ -77,6 +79,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             blog_img = (NetworkImageView) itemView.findViewById(R.id.bl_img);
+
             place_holder = (CardView) itemView.findViewById(R.id.placeCard);
             date = (TextView) itemView.findViewById(R.id.date);
             title = (TextView) itemView.findViewById(R.id.title);

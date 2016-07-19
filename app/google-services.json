@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "20928409762",
+    "project_id": "warm-skill-137608"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20928409762:android:2d1d878dec75e1ce",
+        "android_client_info": {
+          "package_name": "nextus.restartallkill.pokemongo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20928409762-ccd8e4ido58soeliavfhc1vn99fiebo1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nextus.restartallkill.pokemongo",
+            "certificate_hash": "0655FECF3F82A4DC603DE35700490B6D7F3398BA"
+          }
+        },
+        {
+          "client_id": "20928409762-p69bd21d2n7u0v7r22bvqinsjh58mjs4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPFX6i2GLzmfyLJerQRYKpBjMHanxo1Ck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

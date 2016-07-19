@@ -39,22 +39,6 @@ public class CustomRequest<T> extends Request<T> {
         this.params = params;
     }
 
-/*
-    public CustomRequest(int method, String url, Map<String, String> params,
-                         Response.Listener<T> reponseListener, Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
-        this.listener = reponseListener;
-        this.params = params;
-    }
-*/
-
-    /*
-    protected Map<String, String> getParams()
-            throws com.android.volley.AuthFailureError {
-        return params;
-    }
-*/
-
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         return params != null ? params : super.getHeaders();
@@ -86,29 +70,6 @@ public class CustomRequest<T> extends Request<T> {
     protected void deliverResponse(T response) {
         listener.onResponse(response);
     }
-
-    /*
-    @Override
-    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-        try {
-            Log.e("Response", ""+response.data);
-            String jsonString = new String(response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(new JSONObject(jsonString),
-                    HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
-        }
-    }
-
-    @Override
-    protected void deliverResponse(JSONObject response) {
-        // TODO Auto-generated method stub
-        listener.onResponse(response);
-    }
-    */
 
 }
 

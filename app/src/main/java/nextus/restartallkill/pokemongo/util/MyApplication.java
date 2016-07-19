@@ -7,6 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import nextus.restartallkill.pokemongo.BlogItem;
 import nextus.restartallkill.pokemongo.BoardItem;
@@ -15,12 +17,14 @@ import nextus.restartallkill.pokemongo.BoardItem;
  * Created by chosw on 2016-07-16.
  */
 public class MyApplication extends Application {
+
     public static final String TAG = ImgController.class.getSimpleName();
     private static MyApplication mInstance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     public static BoardItem boardItem;
     public static BlogItem blogItem;
+    public static String userId ="";
 
 
     @Override

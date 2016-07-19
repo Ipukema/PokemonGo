@@ -65,14 +65,14 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:background="#FFEB3B"
+                    android:background="#795548"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
                         android:gravity="center"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#000000"
+                        android:textColor="#ffffff"
                         android:textSize="20dp"
                         android:text="속초 맛집"
                         android:layout_width="match_parent"
@@ -248,11 +248,16 @@
 
         </LinearLayout>
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_centerHorizontal="true"

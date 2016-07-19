@@ -38,10 +38,11 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.board_img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        holder.board_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         holder.board_img.setImageUrl(MyApplication.getInstance().boardItem.getBoardData().get(position).getBoard_img(), MyApplication.getInstance().getImageLoader());
+        holder.user_icon.setImageResource(R.drawable.common_plus_signin_btn_icon_dark);
         holder.board_title.setText(MyApplication.getInstance().boardItem.getBoardData().get(position).board_title);
-        holder.board_info.setText(MyApplication.getInstance().boardItem.getBoardData().get(position).board_info);
+       // holder.board_info.setText(MyApplication.getInstance().boardItem.getBoardData().get(position).board_info);
         holder.user_id.setText(MyApplication.getInstance().boardItem.getBoardData().get(position).user_id);
         holder.date.setText(MyApplication.getInstance().boardItem.getBoardData().get(position).date);
     }
@@ -65,7 +66,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
         public ViewHolder(View itemView) {
             super(itemView);
             board_title = (TextView) itemView.findViewById(R.id.board_title);
-            board_info = (TextView) itemView.findViewById(R.id.board_info);
+           // board_info = (TextView) itemView.findViewById(R.id.board_info);
             user_id = (TextView) itemView.findViewById(R.id.user_id);
             date = (TextView) itemView.findViewById(R.id.date);
 
