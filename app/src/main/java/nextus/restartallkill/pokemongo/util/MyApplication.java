@@ -7,11 +7,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.GoogleApiClient;
 
-import nextus.restartallkill.pokemongo.BlogItem;
-import nextus.restartallkill.pokemongo.BoardItem;
+import nextus.restartallkill.pokemongo.data.BlogItem;
+import nextus.restartallkill.pokemongo.data.BoardItem;
 
 /**
  * Created by chosw on 2016-07-16.

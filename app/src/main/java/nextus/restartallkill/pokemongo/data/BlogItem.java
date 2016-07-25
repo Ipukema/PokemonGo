@@ -1,4 +1,4 @@
-package nextus.restartallkill.pokemongo;
+package nextus.restartallkill.pokemongo.data;
 
 import com.google.gson.annotations.SerializedName;
 

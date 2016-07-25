@@ -6,8 +6,6 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -22,16 +20,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import nextus.restartallkill.pokemongo.BoardRecyclerAdapter;
 import nextus.restartallkill.pokemongo.R;
+import nextus.restartallkill.pokemongo.adapter.BoardAdapter;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
 import nextus.restartallkill.pokemongo.util.MyApplication;
@@ -41,7 +37,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
     @DeclareView(id= R.id.boardRecycler) RecyclerView recyclerView;
     @DeclareView(id=R.id.adView) AdView adView;
     @DeclareView(id=R.id.fab, click="this") FloatingActionButton fab;
-    BoardRecyclerAdapter recyclerViewAdapter;
+
     StaggeredGridLayoutManager staggeredGridLayoutManager;
 
     private static final int RC_SIGN_IN = 9001;
@@ -80,9 +76,13 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        //recyclerViewAdapter = new BoardRecyclerAdapter(this, 1);
+        //recyclerView.setAdapter(recyclerViewAdapter);
 
-        recyclerViewAdapter = new BoardRecyclerAdapter(this, 1);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        BoardAdapter adapter = new BoardAdapter();
+        adapter.setList(MyApplication.getInstance().boardItem.getBoardData());
+
+        recyclerView.setAdapter(adapter);
 
     }
 

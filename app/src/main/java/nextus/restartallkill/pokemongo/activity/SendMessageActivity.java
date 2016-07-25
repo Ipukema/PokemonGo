@@ -1,9 +1,7 @@
 package nextus.restartallkill.pokemongo.activity;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,7 +14,7 @@ import com.android.volley.VolleyLog;
 import java.util.HashMap;
 import java.util.Map;
 
-import nextus.restartallkill.pokemongo.BoardItem;
+import nextus.restartallkill.pokemongo.data.BoardItem;
 import nextus.restartallkill.pokemongo.R;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;

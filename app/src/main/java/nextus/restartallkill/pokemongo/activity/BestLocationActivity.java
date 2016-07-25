@@ -19,12 +19,13 @@ import com.google.android.gms.ads.AdView;
 import java.util.HashMap;
 import java.util.Map;
 
-import nextus.restartallkill.pokemongo.BlogItem;
-import nextus.restartallkill.pokemongo.BlogRecyclerAdapter;
+import nextus.restartallkill.pokemongo.data.BlogItem;
 import nextus.restartallkill.pokemongo.R;
+import nextus.restartallkill.pokemongo.adapter.BlogAdapter;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
 import nextus.restartallkill.pokemongo.util.CustomRequest;
+import nextus.restartallkill.pokemongo.adapter.GenericRecylerAdapter;
 import nextus.restartallkill.pokemongo.util.MyApplication;
 
 public class BestLocationActivity extends CycleControllerActivity {
@@ -33,7 +34,6 @@ public class BestLocationActivity extends CycleControllerActivity {
     @DeclareView(id= R.id.adView) AdView adView;
 
     StaggeredGridLayoutManager staggeredGridLayoutManager;
-    BlogRecyclerAdapter recyclerViewAdapter;
     ProgressDialog dialog;
 
     @Override
@@ -72,9 +72,9 @@ public class BestLocationActivity extends CycleControllerActivity {
                             MyApplication.getInstance().blogItem = response;
                             dialog.dismiss();
                             Log.e("Test:",response.getBlogData().get(0).getBl_img());
-                            recyclerViewAdapter = new BlogRecyclerAdapter(getApplicationContext(), 1);
-                            recyclerViewAdapter.setOnItemClickListener(onItemClickListener);
-                            recyclerView.setAdapter(recyclerViewAdapter);
+                            BlogAdapter adapter = new BlogAdapter(getApplicationContext(),onItemClickListener);
+                            adapter.setList(response.getBlogData());
+                            recyclerView.setAdapter(adapter);
                             recyclerView.notifyAll();
                             //recyclerViewAdapter.notifyDataSetChanged();
 
@@ -94,16 +94,11 @@ public class BestLocationActivity extends CycleControllerActivity {
         MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
 
-    BlogRecyclerAdapter.OnItemClickListener onItemClickListener = new BlogRecyclerAdapter.OnItemClickListener(){
+    GenericRecylerAdapter.OnViewHolderClick onItemClickListener = new GenericRecylerAdapter.OnViewHolderClick(){
         @Override
-        public void onItemClick(View view, int position) {
+        public void onClick(View view, int position) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(MyApplication.getInstance().blogItem.getBlogData().get(position).getBl_url()));
             startActivity(intent);
-            //  intent.putExtra("position", MySingleton.current_group_list.get(position));
-            //startActivity(intent);
-            Log.e("Position", ""+MyApplication.getInstance().blogItem.getBlogData().get(position).getBl_url());
-
         }
     };
-
 }

@@ -12,9 +12,11 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <TextView
+                android:paddingLeft="8dp"
                 android:text="1. 제목 (필수)"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
                 android:background="@color/common_plus_signin_btn_text_dark_disabled"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
@@ -26,10 +28,15 @@
                 android:layout_height="40dp" />
             <TextView
                 android:text="2. 내용 (필수)"
+                android:paddingLeft="8dp"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
                 android:background="@color/common_plus_signin_btn_text_dark_disabled"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
             <EditText
+                android:padding="3dp"
+                android:gravity="top|left"
                 android:id="@+id/info"
                 android:background="@null"
                 android:hint="내용을 입력하세요"
@@ -38,38 +45,25 @@
                 android:minHeight="150dp"/>
             <TextView
                 android:text="3. 이미지 추가"
+                android:paddingLeft="8dp"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
                 android:background="@color/common_plus_signin_btn_text_dark_disabled"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
-                <ImageView
-                    android:src="@android:drawable/ic_input_add"
-                    android:id="@+id/addImg01"
-                    android:scaleType="centerCrop"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-                <ImageView
-                    android:src="@android:drawable/ic_input_add"
-                    android:id="@+id/addImg02"
-                    android:scaleType="centerCrop"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-                <ImageView
-                    android:src="@android:drawable/ic_input_add"
-                    android:id="@+id/addImg03"
-                    android:scaleType="centerCrop"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-            </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/addImgRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
-
+                android:padding="8dp"
+                android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
