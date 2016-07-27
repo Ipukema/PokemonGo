@@ -17,7 +17,7 @@ public class CycleBaseLayout extends FrameLayout implements CycleControllable {
 	
 	@Override
 	public void onStart() {
-		
+
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class CycleBaseLayout extends FrameLayout implements CycleControllable {
 
 	@Override
 	public void onPause() {
-		
+
 	}
 
 	@Override

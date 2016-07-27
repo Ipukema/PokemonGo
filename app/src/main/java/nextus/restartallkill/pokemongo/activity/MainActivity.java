@@ -41,7 +41,7 @@ import nextus.restartallkill.pokemongo.core.view.DeclareView;
 import nextus.restartallkill.pokemongo.util.CustomRequest;
 import nextus.restartallkill.pokemongo.util.MyApplication;
 
-public class MainActivity extends CycleControllerActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
+public class MainActivity extends CycleControllerActivity implements View.OnClickListener{
 
     @DeclareView(id= R.id.adView) AdView adView;
     @DeclareView(id=R.id.glossary, click="this") CardView glossary;
@@ -66,27 +66,13 @@ public class MainActivity extends CycleControllerActivity implements View.OnClic
 
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
+    }
 
-        getData();
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-              //  .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                //.addConnectionCallbacks(this)
-                //.addOnConnectionFailedListener(this)
-               // .addApi(Plus.API)
-                //.addScope(Plus.SCOPE_PLUS_PROFILE)
-                .build();
-
-        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setScopes(gso.getScopeArray());
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+      //  getData();
     }
 
     public void getData()
@@ -148,155 +134,14 @@ public class MainActivity extends CycleControllerActivity implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.developer:
-                intent = new Intent(this, CreateContentsActiity.class);
+                intent = new Intent(this, SendMessageActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bestLocation:
                 intent = new Intent(this, BestLocationActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.sign_in_button:
-                //mGoogleApiClient.connect();
-                signIn();
-                break;
         }
     }
 
-    private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Log.e("onActivityResult","true");
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-
-        }
-    }
-
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d("TEST", "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-
-            Log.e("UserID", "userID:" + acct.getId() + " userEmail:"+acct.getEmail());
-            String idToken = acct.getIdToken();
-
-            Log.e("IDtoken",""+idToken);
-           // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-          //  updateUI(true);
-        } else {
-            Log.e("IDtoken","null");
-            // Signed out, show unauthenticated UI.
-            //updateUI(false);
-        }
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "연결 에러 " + connectionResult);
-
-        if (connectionResult.hasResolution()) {
-
-            Log.e(TAG,
-                    String.format(
-                            "Connection to Play Services Failed, error: %d, reason: %s",
-                            connectionResult.getErrorCode(),
-                            connectionResult.toString()));
-            try {
-                //이게 핵심?
-                connectionResult.startResolutionForResult(this, 0);
-            } catch (IntentSender.SendIntentException e) {
-                Log.e(TAG, e.toString(), e);
-            }
-        }else{
-            Toast.makeText(getApplicationContext(), "이미 로그인 중", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        Log.d(TAG, "구글 플레이 연결이 되었습니다.");
-
-        if (!mGoogleApiClient.isConnected() || Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) == null) {
-
-            Log.d(TAG, "onConnected 연결 실패");
-
-        } else {
-            Log.d(TAG, "onConnected 연결 성공");
-
-            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
-            if (currentPerson.hasImage()) {
-
-                Log.d(TAG, "이미지 경로는 : " + currentPerson.getImage().getUrl());
-
-               /* Glide.with(MainActivity.this)
-                        .load(currentPerson.getImage().getUrl())
-                        .into(userphoto);*/
-
-            }
-            if (currentPerson.hasDisplayName()) {
-                Log.d(TAG,"디스플레이 이름 : "+ currentPerson.getDisplayName());
-                Log.d(TAG, "디스플레이 아이디는 : " + currentPerson.getId());
-            //    userName.setText(currentPerson.getDisplayName());
-            }
-
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Log.d(TAG, "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            showProgressDialog();
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    hideProgressDialog();
-                    handleSignInResult(googleSignInResult);
-                }
-            });
-        }
-    }
-
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("Loading");
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-        }
-    }
 }

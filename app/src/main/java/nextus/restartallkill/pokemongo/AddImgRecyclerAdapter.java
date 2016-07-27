@@ -21,6 +21,7 @@ public class AddImgRecyclerAdapter extends RecyclerView.Adapter<AddImgRecyclerAd
     public int count_image = 1;
     public ArrayList<Bitmap> img_list;
     OnItemClickListener mItemClickListener;
+    OnClickListener mOnClickListener;
 
     public AddImgRecyclerAdapter(Context mContext, ArrayList<Bitmap> list)
     {
@@ -39,11 +40,15 @@ public class AddImgRecyclerAdapter extends RecyclerView.Adapter<AddImgRecyclerAd
         Log.e("Position",""+position);
         if(position == getItemCount()-1) //last
         {
-
+            holder.imageView.setImageResource(0);
+            holder.cancle.setVisibility(View.INVISIBLE);
+            holder.addButton.setImageResource(R.drawable.ic_photo_library_black_24dp);
         }
         else
         {
             holder.imageView.setImageBitmap(img_list.get(position));
+            holder.cancle.setVisibility(View.VISIBLE);
+            holder.addButton.setImageResource(0);
         }
     }
 
@@ -56,6 +61,14 @@ public class AddImgRecyclerAdapter extends RecyclerView.Adapter<AddImgRecyclerAd
         void onItemClick(View view, int position);
     }
 
+    public interface OnClickListener {
+        void onClick(View view, int position);
+    }
+
+    public void setOnClickListener(final OnClickListener mOnClickListener){
+        this.mOnClickListener = mOnClickListener;
+    }
+
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
@@ -63,11 +76,16 @@ public class AddImgRecyclerAdapter extends RecyclerView.Adapter<AddImgRecyclerAd
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView imageView;
+        ImageView cancle;
+        ImageView addButton;
 
         public ViewHolder(View itemView)
         {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.addImagebutton);
+            cancle = (ImageView)itemView.findViewById(R.id.cancel_button);
+            addButton = (ImageView)itemView.findViewById(R.id.addImagebutton_icon);
+            cancle.setOnClickListener(this);
             imageView.setOnClickListener(this);
         }
 
@@ -75,6 +93,10 @@ public class AddImgRecyclerAdapter extends RecyclerView.Adapter<AddImgRecyclerAd
         public void onClick(View view) {
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(itemView, getPosition());
+            }
+
+            if(mOnClickListener != null){
+                mOnClickListener.onClick(view, getPosition());
             }
         }
     }

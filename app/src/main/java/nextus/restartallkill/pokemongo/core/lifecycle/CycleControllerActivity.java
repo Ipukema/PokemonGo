@@ -11,6 +11,7 @@ import nextus.restartallkill.pokemongo.core.view.ViewMapper;
 
 
 public class CycleControllerActivity extends AppCompatActivity {
+
 	protected CycleController mLFContoller = new CycleController();
 	
 	public CycleController getCycleController() {
@@ -54,7 +55,7 @@ public class CycleControllerActivity extends AppCompatActivity {
 		super.onDestroy();
 		mLFContoller.finish();
 	}
-	
+
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		super.onActivityResult(arg0, arg1, arg2);

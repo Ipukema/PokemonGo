@@ -17,10 +17,6 @@ import nextus.restartallkill.pokemongo.util.MyApplication;
  */
 public class BoardAdapter extends GenericRecylerAdapter<BoardItem.Board> {
 
-    public BoardAdapter() {
-
-    }
-
     @Override
     protected View createView(ViewGroup viewGroup, int viewType) {
         View item = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.board_item_recycler_img, viewGroup, false);

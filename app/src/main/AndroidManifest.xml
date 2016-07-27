@@ -50,6 +50,7 @@
         </activity>
         <activity
             android:name=".activity.BestLocationActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:value=".activity.MainActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -63,7 +64,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.CreateContentsActiity"></activity>
+        <activity android:name=".activity.CreateContentsActiity"
+            android:parentActivityName=".activity.BoardActivity"
+            ></activity>
     </application>
 
 </manifest>

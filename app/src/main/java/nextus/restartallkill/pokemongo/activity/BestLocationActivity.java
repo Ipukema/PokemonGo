@@ -49,11 +49,19 @@ public class BestLocationActivity extends CycleControllerActivity {
         dialog = ProgressDialog.show(this, "","Loading..Wait.." , true);
         dialog.setIndeterminate(true);
         dialog.show();
-        getBlogData();
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
+
+        Log.e("Account",""+MyApplication.result.getEmail());
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        getBlogData();
     }
 
     public void getBlogData()
@@ -72,7 +80,7 @@ public class BestLocationActivity extends CycleControllerActivity {
                             MyApplication.getInstance().blogItem = response;
                             dialog.dismiss();
                             Log.e("Test:",response.getBlogData().get(0).getBl_img());
-                            BlogAdapter adapter = new BlogAdapter(getApplicationContext(),onItemClickListener);
+                            BlogAdapter adapter = new BlogAdapter(onItemClickListener);
                             adapter.setList(response.getBlogData());
                             recyclerView.setAdapter(adapter);
                             recyclerView.notifyAll();

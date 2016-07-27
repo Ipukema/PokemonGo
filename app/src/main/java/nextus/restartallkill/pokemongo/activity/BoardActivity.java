@@ -1,5 +1,6 @@
 package nextus.restartallkill.pokemongo.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -13,6 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.auth.api.Auth;
@@ -20,16 +25,24 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import nextus.restartallkill.pokemongo.R;
 import nextus.restartallkill.pokemongo.adapter.BoardAdapter;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
+import nextus.restartallkill.pokemongo.data.BoardItem;
+import nextus.restartallkill.pokemongo.util.CustomRequest;
 import nextus.restartallkill.pokemongo.util.MyApplication;
 
 public class BoardActivity extends CycleControllerActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
@@ -42,8 +55,14 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
 
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "MainActivity";
+
+    BoardAdapter adapter;
+
+    GoogleSignInOptions gso;
     GoogleApiClient mGoogleApiClient;
     ProgressDialog mProgressDialog;
+    SignInButton signInButton;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +78,13 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.menu04));
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().requestId().requestProfile()
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
                 .build();
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                //.addConnectionCallbacks(this)
-                //.addOnConnectionFailedListener(this)
-                //.addApi(Plus.API)
-                //.addScope(Plus.SCOPE_PLUS_PROFILE)
                 .build();
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -79,25 +95,50 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         //recyclerViewAdapter = new BoardRecyclerAdapter(this, 1);
         //recyclerView.setAdapter(recyclerViewAdapter);
 
-        BoardAdapter adapter = new BoardAdapter();
-        adapter.setList(MyApplication.getInstance().boardItem.getBoardData());
-
+        adapter = new BoardAdapter();
         recyclerView.setAdapter(adapter);
 
     }
+
 
     @Override
     public void onClick(View view) {
         switch(view.getId())
         {
             case R.id.fab:
-                getLoginInfo();
+                if(MyApplication.result == null)
+                {
+                    showDialog();
+                }
+                else
+                {
+                    Intent intent = new Intent(this, CreateContentsActiity.class);
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.sign_in_button:
+                signIn();
                 break;
         }
     }
 
+    public void showDialog()
+    {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.login_dialog);
+        dialog.setTitle("로그인");
+        dialog.show();
+
+        signInButton = (SignInButton) dialog.findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setScopes(gso.getScopeArray());
+        signInButton.setOnClickListener(this);
+    }
+
 
     private void signIn() {
+        dialog.dismiss();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -120,6 +161,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
+            MyApplication.result = result.getSignInAccount();
 
             Log.e("UserID", "userID:" + acct.getId() + " userEmail:"+acct.getEmail());
             String idToken = acct.getIdToken();
@@ -129,8 +171,6 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
             //  updateUI(true);
         } else {
             Log.e("IDtoken","null");
-            Toast.makeText(this,"로그인이 필요한 서비스입니다.",Toast.LENGTH_SHORT).show();
-            signIn();
             // Signed out, show unauthenticated UI.
             //updateUI(false);
         }
@@ -195,7 +235,9 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
 
     }
 
-    public void getLoginInfo() {
+    @Override
+    public void onStart() {
+        super.onStart();
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
@@ -217,6 +259,9 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
                 }
             });
         }
+
+        showProgressDialog();
+        getData();
     }
 
     private void showProgressDialog() {
@@ -233,6 +278,40 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }
+    }
+
+    public void getData()
+    {
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("id", "sef");
+
+        String url = "http://125.209.193.163/pokemongo/getBoardData.jsp";
+
+        final CustomRequest<BoardItem> jsonObjReq = new CustomRequest<BoardItem>(Request.Method.POST, url, param,
+                BoardItem.class, //Not null.
+                new Response.Listener<BoardItem>() {
+                    @Override
+                    public void onResponse(BoardItem response) {
+                        try {
+                            MyApplication.getInstance().boardItem = response;
+                            adapter.setList(MyApplication.getInstance().boardItem.getBoardData());
+                            adapter.notifyDataSetChanged();
+                            hideProgressDialog();
+                            Log.e("Test:",response.getBoardData().get(0).getBoard_title());
+                            //MySingletonOld.dinosaursBasicData.getData().addAll(response.getData());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ERROR", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
 
 

@@ -1,7 +1,5 @@
 package nextus.restartallkill.pokemongo.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +17,8 @@ import nextus.restartallkill.pokemongo.util.MyApplication;
  */
 public class BlogAdapter extends GenericRecylerAdapter<BlogItem.Blog> {
 
-    private Context mContext;
-
-    public BlogAdapter(Context mContext, OnViewHolderClick mListener) {
+    public BlogAdapter(OnViewHolderClick mListener) {
         super(mListener);
-        this.mContext = mContext;
     }
 
     @Override

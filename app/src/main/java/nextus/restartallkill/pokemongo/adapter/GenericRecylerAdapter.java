@@ -21,6 +21,49 @@ public abstract class GenericRecylerAdapter<T> extends RecyclerView.Adapter<Gene
         void onClick(View view, int position);
     }
 
+    protected abstract View createView(ViewGroup viewGroup, int viewType);
+
+    protected abstract void bindView(T item, ViewHolder viewHolder);
+
+    public GenericRecylerAdapter() {
+    }
+
+    public GenericRecylerAdapter(OnViewHolderClick listener) {
+        super();
+        mListener = listener;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        return new ViewHolder(createView(viewGroup, viewType), mListener);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        bindView(getItem(position), viewHolder);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
+    }
+
+    public T getItem(int index) {
+        return ((mList != null && index < mList.size()) ? mList.get(index) : null);
+    }
+
+    public void setList(List<T> list) {
+        mList = list;
+    }
+
+    public List<T> getList() {
+        return mList;
+    }
+
+    public void setClickListener(OnViewHolderClick listener) {
+        mListener = listener;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Map<Integer, View> mMapView;
         private OnViewHolderClick mListener;
@@ -65,49 +108,5 @@ public abstract class GenericRecylerAdapter<T> extends RecyclerView.Adapter<Gene
 
             return mMapView.get(id);
         }
-    }
-
-    protected abstract View createView(ViewGroup viewGroup, int viewType);
-
-    protected abstract void bindView(T item, ViewHolder viewHolder);
-
-    public GenericRecylerAdapter() {
-    }
-
-    public GenericRecylerAdapter(OnViewHolderClick listener) {
-        super();
-        mListener = listener;
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        return new ViewHolder(createView(viewGroup, viewType), mListener);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        bindView(getItem(position), viewHolder);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mList.size();
-    }
-
-    public T getItem(int index) {
-        return ((mList != null && index < mList.size()) ? mList.get(index) : null);
-    }
-
-
-    public void setList(List<T> list) {
-        mList = list;
-    }
-
-    public List<T> getList() {
-        return mList;
-    }
-
-    public void setClickListener(OnViewHolderClick listener) {
-        mListener = listener;
     }
 }
