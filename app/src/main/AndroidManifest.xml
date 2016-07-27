@@ -66,6 +66,7 @@
 
         <activity android:name=".activity.CreateContentsActiity"
             android:parentActivityName=".activity.BoardActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             ></activity>
     </application>
 

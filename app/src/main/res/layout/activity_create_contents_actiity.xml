@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
             <EditText
-                android:id="@+id/title"
+                android:id="@+id/contents_title"
                 android:background="@null"
                 android:hint="제목을 입력하세요."
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             <EditText
                 android:padding="3dp"
                 android:gravity="top|left"
-                android:id="@+id/info"
+                android:id="@+id/contents_info"
                 android:background="@null"
                 android:hint="내용을 입력하세요"
                 android:layout_width="match_parent"

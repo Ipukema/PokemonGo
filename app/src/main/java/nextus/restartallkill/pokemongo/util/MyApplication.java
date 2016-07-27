@@ -1,13 +1,19 @@
 package nextus.restartallkill.pokemongo.util;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
 
 import nextus.restartallkill.pokemongo.data.BlogItem;
 import nextus.restartallkill.pokemongo.data.BoardItem;
@@ -25,12 +31,34 @@ public class MyApplication extends Application {
     public static BlogItem blogItem;
     public static String userId ="";
     public static GoogleSignInAccount result;
-
+    public AppCompatActivity activity;
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInOptions gso;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+    }
+
+    public GoogleApiClient getmGoogleApiClient()
+    {
+        return mGoogleApiClient;
+    }
+
+    public GoogleSignInOptions getGoogleSignInOptions(){
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
+                .build();
+        return gso;
+    }
+    public GoogleApiClient getGoogleApiClient(AppCompatActivity activity, GoogleApiClient.OnConnectionFailedListener listener){
+        this.activity = activity;
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this.activity, listener)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
+                .build();
+        return mGoogleApiClient;
     }
 
 

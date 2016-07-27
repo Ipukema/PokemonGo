@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,12 +13,16 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.auth.api.Auth;
@@ -35,6 +40,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import nextus.restartallkill.pokemongo.R;
@@ -53,6 +59,8 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
 
     StaggeredGridLayoutManager staggeredGridLayoutManager;
 
+    EditText nickname;
+
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "MainActivity";
 
@@ -63,6 +71,8 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
     ProgressDialog mProgressDialog;
     SignInButton signInButton;
     Dialog dialog;
+
+    Boolean login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +88,8 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.menu04));
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+        gso = MyApplication.getInstance().getGoogleSignInOptions();
+        mGoogleApiClient = MyApplication.getInstance().getGoogleApiClient(this, this);
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
@@ -98,15 +102,20 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         adapter = new BoardAdapter();
         recyclerView.setAdapter(adapter);
 
-    }
+        SharedPreferences pref = getSharedPreferences("pokemon", MODE_PRIVATE);
+        if(pref.getString("user_nickname",null) != null )
+        {
+            Log.e("USER_NICKNAME",""+pref.getString("user_nickname",null));
+        }
 
+    }
 
     @Override
     public void onClick(View view) {
         switch(view.getId())
         {
             case R.id.fab:
-                if(MyApplication.result == null)
+                if(!login)
                 {
                     showDialog();
                 }
@@ -119,6 +128,17 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
 
             case R.id.sign_in_button:
                 signIn();
+                break;
+
+            case R.id.nickname_submit:
+                if(nickname.getText().toString().length() == 0)
+                {
+                    Toast.makeText(getApplicationContext(),"닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    setUserData();
+                }
                 break;
         }
     }
@@ -147,13 +167,67 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.e("onActivityResult","true");
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-
+            makeNickName();
         }
+    }
+
+    private void setUserData()
+    {
+        SharedPreferences pref = getSharedPreferences("pokemon", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("user_id", MyApplication.result.getId());
+        editor.putString("user_email",MyApplication.result.getEmail());
+        editor.putString("user_nickname",nickname.getText().toString());
+        editor.apply();
+
+        addUserInfo();
+    }
+
+    private void makeNickName()
+    {
+        dialog.setContentView(R.layout.nickname_dialog);
+        dialog.show();
+
+        nickname = (EditText) dialog.findViewById(R.id.nickname_input);
+        Button submit = (Button) dialog.findViewById(R.id.nickname_submit);
+        submit.setOnClickListener(this);
+
+    }
+
+    private void addUserInfo()
+    {
+        String url = "http://restartallkill.nextus.co.kr/pokemongo/addUser.jsp";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("user_id", MyApplication.result.getId());
+                params.put("user_email", MyApplication.result.getEmail());
+                params.put("user_nickname", nickname.getText().toString());
+                return params;
+            }
+
+        };
+
+        MyApplication.getInstance().addToRequestQueue(stringRequest);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -163,16 +237,11 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
             GoogleSignInAccount acct = result.getSignInAccount();
             MyApplication.result = result.getSignInAccount();
 
-            Log.e("UserID", "userID:" + acct.getId() + " userEmail:"+acct.getEmail());
-            String idToken = acct.getIdToken();
-
-            Log.e("IDtoken",""+idToken);
-            // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            //  updateUI(true);
+            login = true;
         } else {
             Log.e("IDtoken","null");
             // Signed out, show unauthenticated UI.
-            //updateUI(false);
+            login = false;
         }
     }
 
@@ -250,6 +319,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
+            Log.e("new_user","TEST");
             showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
@@ -260,7 +330,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
             });
         }
 
-        showProgressDialog();
+       // showProgressDialog();
         getData();
     }
 
@@ -314,5 +384,12 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
 
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        if(dialog != null) dialog.dismiss();
+        hideProgressDialog();
+    }
 
 }
