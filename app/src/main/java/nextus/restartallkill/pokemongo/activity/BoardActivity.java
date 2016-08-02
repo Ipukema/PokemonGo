@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -44,7 +47,9 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import nextus.restartallkill.pokemongo.R;
+import nextus.restartallkill.pokemongo.TempBoardAdapter;
 import nextus.restartallkill.pokemongo.adapter.BoardAdapter;
+import nextus.restartallkill.pokemongo.adapter.GenericRecylerAdapter;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
 import nextus.restartallkill.pokemongo.data.BoardItem;
@@ -58,6 +63,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
     @DeclareView(id=R.id.fab, click="this") FloatingActionButton fab;
 
     StaggeredGridLayoutManager staggeredGridLayoutManager;
+    LinearLayoutManager linearLayoutManager;
 
     EditText nickname;
 
@@ -65,6 +71,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
     private static final String TAG = "MainActivity";
 
     BoardAdapter adapter;
+    TempBoardAdapter adapter2;
 
     GoogleSignInOptions gso;
     GoogleApiClient mGoogleApiClient;
@@ -92,21 +99,60 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         mGoogleApiClient = MyApplication.getInstance().getGoogleApiClient(this, this);
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        //staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+       // recyclerView.setHasFixedSize(true);
 
         //recyclerViewAdapter = new BoardRecyclerAdapter(this, 1);
         //recyclerView.setAdapter(recyclerViewAdapter);
 
         adapter = new BoardAdapter();
+        adapter.setClickListener(new GenericRecylerAdapter.OnViewHolderClick() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(getApplicationContext(),"Position :"+position,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), BoardItemViewActivity.class);
+                intent.putExtra("position",position);
+
+
+                startActivity(intent);
+            }
+        });
+
+        adapter2 = new TempBoardAdapter(getApplicationContext());
+        //recyclerView.setAdapter(adapter);
         recyclerView.setAdapter(adapter);
+
 
         SharedPreferences pref = getSharedPreferences("pokemon", MODE_PRIVATE);
         if(pref.getString("user_nickname",null) != null )
         {
             Log.e("USER_NICKNAME",""+pref.getString("user_nickname",null));
         }
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int previousTotal = 0;
+            private boolean loading = true;
+            private int visibleThreshold = 5;
+            int visibleItemCount, totalItemCount;
+            int[] firstVisibleItems, firstVisibleItem = null;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = staggeredGridLayoutManager.getChildCount();
+                totalItemCount = staggeredGridLayoutManager.getItemCount();
+                firstVisibleItem = staggeredGridLayoutManager.findFirstVisibleItemPositions(firstVisibleItems);
+            }
+        });
 
     }
 
@@ -365,6 +411,11 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
                         try {
                             MyApplication.getInstance().boardItem = response;
                             adapter.setList(MyApplication.getInstance().boardItem.getBoardData());
+                            if(MyApplication.boardItem.getBoardData().size() >= 5 )
+                                adapter.setItmeCout(5);
+                            else
+                                adapter.setItmeCout(MyApplication.boardItem.getBoardData().size());
+
                             adapter.notifyDataSetChanged();
                             hideProgressDialog();
                             Log.e("Test:",response.getBoardData().get(0).getBoard_title());

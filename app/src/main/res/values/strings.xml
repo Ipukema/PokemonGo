@@ -68,6 +68,7 @@
     <string name="term_info18">포켓몬 GO를 하는 당신! 당신이 트레이너입니다.</string>
     <string name="term_info19">포획 하지 못한 자연 상태의 포켓몬은 야생 포켓몬으로 불립니다.</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 
 </resources>

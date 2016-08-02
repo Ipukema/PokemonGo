@@ -27,6 +27,11 @@ public class BoardItem {
         @SerializedName("user_id") String user_id;
         @SerializedName("date") String date;
         @SerializedName("board_img") String board_img;
+        @SerializedName("image_count") String image_count;
+
+        public String getImage_count() {
+            return image_count;
+        }
 
         public String getBoard_img() {
             return board_img;

@@ -64,10 +64,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.CreateContentsActiity"
+        <activity
+            android:name=".activity.CreateContentsActiity"
             android:parentActivityName=".activity.BoardActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activity.BoardItemViewActivity"
+            android:label="@string/title_activity_main2"
+            android:parentActivityName=".activity.BoardActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nextus.restartallkill.pokemongo.activity.BoardActivity" />
+        </activity>
     </application>
 
 </manifest>

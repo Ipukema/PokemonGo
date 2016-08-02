@@ -15,6 +15,7 @@ import java.util.Map;
 public abstract class GenericRecylerAdapter<T> extends RecyclerView.Adapter<GenericRecylerAdapter.ViewHolder> {
 
     private List<T> mList = Collections.emptyList();
+    private int item_count = 0;
     private OnViewHolderClick mListener;
 
     public interface OnViewHolderClick {
@@ -50,6 +51,11 @@ public abstract class GenericRecylerAdapter<T> extends RecyclerView.Adapter<Gene
 
     public T getItem(int index) {
         return ((mList != null && index < mList.size()) ? mList.get(index) : null);
+    }
+
+    public void setItmeCout(int count)
+    {
+        item_count = count;
     }
 
     public void setList(List<T> list) {

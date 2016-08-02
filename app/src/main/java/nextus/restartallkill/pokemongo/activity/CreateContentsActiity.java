@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -141,6 +142,9 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
                 params.put("board_title", title.getText().toString());
                 params.put("board_info", info.getText().toString());
                 params.put("date",new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
+                params.put("count", ""+addedImg.size());
+
+                Log.e("addeImg count",""+addedImg.size());
 
                 return params;
             }
