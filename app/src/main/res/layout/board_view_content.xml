@@ -89,6 +89,7 @@
                                     app:fontAwesomeIcon="fa_eye"
                                     />
                                 <TextView
+                                    android:id="@+id/view_count"
                                     android:layout_marginLeft="8dp"
                                     android:text="100"
                                     android:layout_width="wrap_content"
@@ -102,6 +103,7 @@
                                     app:fontAwesomeIcon="fa_comments"
                                     />
                                 <TextView
+                                    android:id="@+id/comment_count"
                                     android:layout_marginLeft="8dp"
                                     android:text="100"
                                     android:layout_width="wrap_content"
@@ -114,6 +116,7 @@
                                     app:fontAwesomeIcon="fa_thumbs_o_up"
                                     />
                                 <TextView
+                                    android:id="@+id/like_count"
                                     android:layout_marginLeft="8dp"
                                     android:text="100"
                                     android:layout_width="wrap_content"
@@ -164,14 +167,16 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="30dp">
 
                         <LinearLayout
+                            android:id="@+id/like_button"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:gravity="center"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="match_parent">
 
                             <com.beardedhen.androidbootstrap.AwesomeTextView
                                 android:layout_width="wrap_content"
@@ -193,11 +198,13 @@
                             android:layout_width="1dp"
                             android:layout_height="match_parent"/>
                         <LinearLayout
+                            android:id="@+id/create_comments"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:gravity="center"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="match_parent">
 
                             <com.beardedhen.androidbootstrap.AwesomeTextView
                                 android:layout_width="wrap_content"

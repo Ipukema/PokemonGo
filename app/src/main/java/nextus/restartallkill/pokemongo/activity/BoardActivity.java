@@ -108,7 +108,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         //recyclerViewAdapter = new BoardRecyclerAdapter(this, 1);
         //recyclerView.setAdapter(recyclerViewAdapter);
 
-        adapter = new BoardAdapter();
+        adapter = new BoardAdapter(getApplicationContext());
         adapter.setClickListener(new GenericRecylerAdapter.OnViewHolderClick() {
             @Override
             public void onClick(View view, int position) {

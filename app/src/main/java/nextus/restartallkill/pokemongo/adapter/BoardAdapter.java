@@ -1,5 +1,6 @@
 package nextus.restartallkill.pokemongo.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,13 @@ import nextus.restartallkill.pokemongo.util.MyApplication;
  */
 public class BoardAdapter extends GenericRecylerAdapter<BoardItem.Board> {
 
+    public Context mContext;
+
+    public BoardAdapter(Context context)
+    {
+        mContext = context;
+    }
+
     @Override
     protected View createView(ViewGroup viewGroup, int viewType) {
         View item = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.board_item_recycler_img, viewGroup, false);
@@ -38,7 +46,15 @@ public class BoardAdapter extends GenericRecylerAdapter<BoardItem.Board> {
             TextView board_title = (TextView) viewHolder.getView(R.id.board_title);
             TextView user_id = (TextView) viewHolder.getView(R.id.user_id);
             TextView date = (TextView) viewHolder.getView(R.id.date);
-            NetworkImageView board_img = (NetworkImageView) viewHolder.getView(R.id.board_img);
+            ImageView board_img = (ImageView) viewHolder.getView(R.id.board_img);
+            TextView view_count = (TextView) viewHolder.getView(R.id.view_count);
+            TextView like_count = (TextView) viewHolder.getView(R.id.like_count);
+            TextView comment_count = (TextView) viewHolder.getView(R.id.comment_count);
+
+
+            view_count.setText("조회수 "+item.getView_count());
+            like_count.setText("좋아요 "+item.getLike_count());
+            comment_count.setText("댓글 "+item.getComment_count());
             //board_img.setOnClickListener();
 
             ImageView user_icon = (ImageView) viewHolder.getView(R.id.user_icon);
@@ -47,8 +63,10 @@ public class BoardAdapter extends GenericRecylerAdapter<BoardItem.Board> {
             user_id.setText(item.getUser_id());
             date.setText(item.getDate());
 
-            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
-            board_img.setImageUrl(item.getBoard_img(), MyApplication.getInstance().getImageLoader());
+            //ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
+            //board_img.setImageUrl(item.getBoard_img(), MyApplication.getInstance().getImageLoader());
+
+            Glide.with(mContext).load(item.getBoard_img()).crossFade().thumbnail(0.1f).fitCenter().into(board_img);
 
             String date_string = item.getDate();
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.KOREA);

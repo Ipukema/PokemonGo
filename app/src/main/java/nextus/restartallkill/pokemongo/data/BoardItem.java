@@ -28,6 +28,21 @@ public class BoardItem {
         @SerializedName("date") String date;
         @SerializedName("board_img") String board_img;
         @SerializedName("image_count") String image_count;
+        @SerializedName("view_count") int view_count;
+        @SerializedName("like_count") int like_count;
+        @SerializedName("comment_count") int comment_count;
+
+        public int getView_count() {
+            return view_count;
+        }
+
+        public int getLike_count() {
+            return like_count;
+        }
+
+        public int getComment_count() {
+            return comment_count;
+        }
 
         public String getImage_count() {
             return image_count;

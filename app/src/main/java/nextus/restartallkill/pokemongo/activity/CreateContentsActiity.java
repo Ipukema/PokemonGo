@@ -1,5 +1,6 @@
 package nextus.restartallkill.pokemongo.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -44,6 +45,8 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
     @DeclareView(id=R.id.contents_title) EditText title;
     @DeclareView(id=R.id.contents_info) EditText info;
     @DeclareView(id = R.id.adView) AdView adView;
+
+    private ProgressDialog mProgressDialog;
 
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -101,6 +104,22 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
         }
     };
 
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("Loading");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -120,11 +139,13 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
 
     public void upload()
     {
+        showProgressDialog();
         String UPLOAD_URL = "http://restartallkill.nextus.co.kr/pokemongo/multipart.jsp";
 
         MultiPartRequest multipartRequest = new MultiPartRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
+                hideProgressDialog();
                 Toast.makeText(getApplicationContext(), ""+addedImg.size()+"개의 이미지와 함께 업로드가 완료되었습니다." , Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -175,7 +196,7 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
     public byte[] getByteImage(Bitmap bmp)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
 
         return imageBytes;
@@ -193,6 +214,7 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
             try {
                 //Getting the Bitmap from Gallery
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //Bitmap temp = resizeBitmapImage(bitmap, 300);
                 //Setting the Bitmap to ImageView
                 addedImg.add(bitmap);
                 adapter.notifyDataSetChanged();
@@ -201,6 +223,43 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Bitmap이미지의 가로, 세로 사이즈를 리사이징 한다.
+     *
+     * @param source 원본 Bitmap 객체
+     * @param maxResolution 제한 해상도
+     * @return 리사이즈된 이미지 Bitmap 객체
+     */
+    public Bitmap resizeBitmapImage(Bitmap source, int maxResolution)
+    {
+        int width = source.getWidth();
+        int height = source.getHeight();
+        int newWidth = width;
+        int newHeight = height;
+        float rate = 0.0f;
+
+        if(width > height)
+        {
+            if(maxResolution < width)
+            {
+                rate = maxResolution / (float) width;
+                newHeight = (int) (height * rate);
+                newWidth = maxResolution;
+            }
+        }
+        else
+        {
+            if(maxResolution < height)
+            {
+                rate = maxResolution / (float) height;
+                newWidth = (int) (width * rate);
+                newHeight = maxResolution;
+            }
+        }
+
+        return Bitmap.createScaledBitmap(source, newWidth, newHeight, true);
     }
 
 }

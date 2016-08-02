@@ -13,12 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.android.volley.toolbox.NetworkImageView
+        <ImageView
+            android:scaleType="fitCenter"
             android:id="@+id/board_img"
             android:src="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="150dp"
+            android:maxHeight="100dp"
             />
         <LinearLayout
             android:layout_margin="8dp"
@@ -38,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp">
                 <TextView
+                    android:id="@+id/view_count"
                     android:gravity="center"
                     android:textSize="8dp"
                     android:textColor="@color/colorAccent"
@@ -51,6 +53,7 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"/>
                 <TextView
+                    android:id="@+id/comment_count"
                     android:gravity="center"
                     android:textSize="8dp"
                     android:text="댓글수 0"
@@ -63,6 +66,7 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"/>
                 <TextView
+                    android:id="@+id/like_count"
                     android:gravity="center"
                     android:textSize="8dp"
                     android:text="추천 2"
