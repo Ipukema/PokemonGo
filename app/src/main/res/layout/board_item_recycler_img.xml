@@ -14,12 +14,11 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:scaleType="fitCenter"
             android:id="@+id/board_img"
             android:src="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="100dp"
+            android:adjustViewBounds="true"
             />
         <LinearLayout
             android:layout_margin="8dp"

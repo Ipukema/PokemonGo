@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,10 +65,24 @@ public class BoardAdapter extends GenericRecylerAdapter<BoardItem.Board> {
             user_id.setText(item.getUser_id());
             date.setText(item.getDate());
 
+
+
             //ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
             //board_img.setImageUrl(item.getBoard_img(), MyApplication.getInstance().getImageLoader());
+            if(Integer.parseInt(item.getImage_count())==0)
+            {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                board_img.setLayoutParams(params);
+                board_img.setImageResource(0);
+            }
+            else
+            {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.height = 600;
+                board_img.setLayoutParams(params);
+                Glide.with(mContext).load(item.getBoard_img()).thumbnail(0.1f).centerCrop().into(board_img);
+            }
 
-            Glide.with(mContext).load(item.getBoard_img()).crossFade().thumbnail(0.1f).fitCenter().into(board_img);
 
             String date_string = item.getDate();
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.KOREA);
