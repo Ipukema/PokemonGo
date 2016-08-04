@@ -98,7 +98,7 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         gso = MyApplication.getInstance().getGoogleSignInOptions();
         mGoogleApiClient = MyApplication.getInstance().getGoogleApiClient(this, this);
 
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         //staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -334,20 +334,17 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
                /* Glide.with(MainActivity.this)
                         .load(currentPerson.getImage().getUrl())
                         .into(userphoto);*/
-
             }
             if (currentPerson.hasDisplayName()) {
                 Log.d(TAG,"디스플레이 이름 : "+ currentPerson.getDisplayName());
                 Log.d(TAG, "디스플레이 아이디는 : " + currentPerson.getId());
                 //    userName.setText(currentPerson.getDisplayName());
             }
-
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -409,8 +406,8 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
                     @Override
                     public void onResponse(BoardItem response) {
                         try {
-                            MyApplication.getInstance().boardItem = response;
-                            adapter.setList(MyApplication.getInstance().boardItem.getBoardData());
+                            MyApplication.boardItem = response;
+                            adapter.setList(MyApplication.boardItem.getBoardData());
                             if(MyApplication.boardItem.getBoardData().size() >= 5 )
                                 adapter.setItmeCout(5);
                             else
@@ -441,6 +438,13 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
         super.onDestroy();
         if(dialog != null) dialog.dismiss();
         hideProgressDialog();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        System.gc();
     }
 
 }

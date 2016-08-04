@@ -3,7 +3,9 @@ package nextus.restartallkill.pokemongo.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,6 +58,8 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
     LinearLayoutManager layoutManager;
     AddImgRecyclerAdapter adapter;
 
+    Bitmap bitmap;
+    Uri filePath;
     File file;
 
     @Override
@@ -74,8 +79,8 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
         adapter = new AddImgRecyclerAdapter(getApplicationContext(), addedImg);
         adapter.setOnItemClickListener(onItemClickListener);
         adapter.setOnClickListener(onClickListener);
-
         myList.setAdapter(adapter);
+
 
     }
 
@@ -195,11 +200,19 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
 
     public byte[] getByteImage(Bitmap bmp)
     {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        byte[] imageBytes = baos.toByteArray();
-
-        return imageBytes;
+        try
+        {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+            byte[] imageBytes = baos.toByteArray();
+            baos.close();
+            bmp.recycle();
+            bmp = null;
+            return imageBytes;
+        } catch (Exception e)
+        {
+            return null;
+        }
     }
 
     @Override
@@ -207,15 +220,20 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            Uri filePath = data.getData();
+            filePath = data.getData();
             file = new File(filePath.getPath());
             fileName.add(file.getName());
             try {
+                AssetFileDescriptor afd = getContentResolver().openAssetFileDescriptor(filePath, "r");
+                BitmapFactory.Options opt = new BitmapFactory.Options();
+                opt.inSampleSize = 4;
+                Bitmap bitmap = BitmapFactory.decodeFileDescriptor(afd.getFileDescriptor(), null, opt);
+
                 //Getting the Bitmap from Gallery
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Bitmap temp = resizeBitmapImage(bitmap, 300);
                 //Setting the Bitmap to ImageView
+
                 addedImg.add(bitmap);
                 adapter.notifyDataSetChanged();
 
@@ -223,6 +241,31 @@ public class CreateContentsActiity extends CycleControllerActivity implements Vi
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Log.e("onDestroy", "call distroy");
+        if(bitmap != null) {
+            bitmap.recycle();
+        }
+        for(int i=0; i<addedImg.size(); i++)
+        {
+            addedImg.get(i).recycle();
+        }
+        addedImg.clear();
+        addedImg = null;
+
+        for(int i=0; i<myList.getChildCount(); i++)
+        {
+            ViewGroup viewGroup = (ViewGroup) myList.getChildAt(i);
+            viewGroup.removeAllViews();
+        }
+
+        myList.destroyDrawingCache();
+        myList = null;
     }
 
     /**

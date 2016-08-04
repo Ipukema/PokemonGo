@@ -2,6 +2,8 @@ package nextus.restartallkill.pokemongo;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +58,7 @@ public class AddImgRecyclerAdapter extends RecyclerView.Adapter<AddImgRecyclerAd
     public int getItemCount() {
         return img_list.size()+1;
     }
+
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);

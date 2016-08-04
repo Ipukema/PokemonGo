@@ -1,5 +1,6 @@
 package nextus.restartallkill.pokemongo.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,9 +15,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
+import com.beardedhen.androidbootstrap.AwesomeTextView;
+import com.beardedhen.androidbootstrap.api.attributes.BootstrapBrand;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,8 +51,11 @@ public class BoardItemViewActivity extends CycleControllerActivity implements Vi
     @DeclareView(id=R.id.adView) AdView adView;
     @DeclareView(id=R.id.like_button, click = "this") LinearLayout like_button;
     @DeclareView(id=R.id.create_comments, click = "this") LinearLayout create_comments;
+    @DeclareView(id=R.id.like_img) AwesomeTextView like_img;
+    @DeclareView(id=R.id.like_text) TextView like_text;
 
     int pos = 0;
+    boolean alreadyLike = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +87,7 @@ public class BoardItemViewActivity extends CycleControllerActivity implements Vi
         super.onStart();
         setData();
         updateViewCount();
+        getLikeData();
     }
 
     public void updateViewCount()
@@ -150,7 +162,97 @@ public class BoardItemViewActivity extends CycleControllerActivity implements Vi
 
     public void increasingLike()
     {
+        if( alreadyLike ) // 이미 좋아요를 누른 상태이면
+        {
 
+        }
+        else  // 좋아요를 누르지 않은 상태 -> 색상 변경 및 db값 변경
+        {
+            like_img.setTextColor(Color.BLUE);
+            like_text.setTextColor(Color.BLUE);
+            sendLikeData();
+        }
+
+    }
+
+    public void getLikeData()
+    {
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("user_id", MyApplication.result.getId());
+        param.put("board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
+
+        JSONObject jsonObject = new JSONObject(param);
+        String url = "http://125.209.193.163/pokemongo/findLike.jsp";
+
+        final CustomRequest<JSONObject> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param,
+                JSONObject.class, //Not null.
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        parseJSON(response);
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ERROR", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+
+
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+    private void setLike(int result)
+    {
+        if(result == 1)
+        {
+            like_img.setTextColor(Color.BLUE);
+            like_text.setTextColor(Color.BLUE);
+            alreadyLike = true;
+        }
+        else alreadyLike = false;
+    }
+
+    private String parseJSON(JSONObject json) {
+        String mText = "";
+        try {
+            //JSONObject value = json.getJSONObject("result_array");
+            //Log.e("Value", value.getString("result"));
+            JSONArray items = json.getJSONArray("result_array");
+            JSONObject item = items.getJSONObject(0);
+            mText = item.getString("result");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mText;
+    }
+
+    public void sendLikeData()
+    {
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("user_id", MyApplication.result.getId());
+        param.put("board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
+
+        String url = "http://125.209.193.163/pokemongo/createLike.jsp";
+
+        final CustomRequest<BoardItem> jsonObjReq = new CustomRequest<BoardItem>(Request.Method.POST, url, param,
+                BoardItem.class, //Not null.
+                new Response.Listener<BoardItem>() {
+                    @Override
+                    public void onResponse(BoardItem response) {
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ERROR", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
 
     @Override
