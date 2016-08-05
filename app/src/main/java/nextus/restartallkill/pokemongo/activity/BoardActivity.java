@@ -444,7 +444,6 @@ public class BoardActivity extends CycleControllerActivity implements View.OnCli
     public void onResume()
     {
         super.onResume();
-        System.gc();
     }
 
 }

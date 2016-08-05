@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +14,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
-import com.beardedhen.androidbootstrap.api.attributes.BootstrapBrand;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +33,7 @@ import nextus.restartallkill.pokemongo.R;
 import nextus.restartallkill.pokemongo.core.lifecycle.CycleControllerActivity;
 import nextus.restartallkill.pokemongo.core.view.DeclareView;
 import nextus.restartallkill.pokemongo.data.BoardItem;
+import nextus.restartallkill.pokemongo.data.LikeData;
 import nextus.restartallkill.pokemongo.util.CustomRequest;
 import nextus.restartallkill.pokemongo.util.MyApplication;
 
@@ -162,47 +160,75 @@ public class BoardItemViewActivity extends CycleControllerActivity implements Vi
 
     public void increasingLike()
     {
-        if( alreadyLike ) // 이미 좋아요를 누른 상태이면
+        if( alreadyLike ) // 이미 좋아요를 누른 상태이면 -> 좋아요를 취소한다.
         {
-
+            cancleLike();
+            alreadyLike = false;
+            like_img.setTextColor(Color.BLACK);
+            like_text.setTextColor(Color.BLACK);
         }
         else  // 좋아요를 누르지 않은 상태 -> 색상 변경 및 db값 변경
         {
             like_img.setTextColor(Color.BLUE);
             like_text.setTextColor(Color.BLUE);
+            alreadyLike = true;
             sendLikeData();
         }
 
     }
 
+    public void cancleLike()
+    {
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
+        param.put("user_id", MyApplication.result.getId());
+
+
+        JSONObject jsonObject = new JSONObject(param);
+        String url = "http://125.209.193.163/pokemongo/cancleLike.jsp";
+
+        CustomRequest<LikeData> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param, LikeData.class, new Response.Listener<LikeData>() {
+            @Override
+            public void onResponse(LikeData response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
     public void getLikeData()
     {
         Map<String, String> param = new HashMap<String, String>();
-        param.put("user_id", MyApplication.result.getId());
         param.put("board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
+        param.put("user_id", MyApplication.result.getId());
+
+        Log.e("Board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
 
         JSONObject jsonObject = new JSONObject(param);
         String url = "http://125.209.193.163/pokemongo/findLike.jsp";
 
-        final CustomRequest<JSONObject> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param,
-                JSONObject.class, //Not null.
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        parseJSON(response);
-                    }
-                }, new Response.ErrorListener() {
-
+        CustomRequest<LikeData> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param, LikeData.class, new Response.Listener<LikeData>() {
+            @Override
+            public void onResponse(LikeData response) {
+                setLike(Integer.parseInt(response.getLikeData().get(0).getResult()));
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("ERROR", "Error: " + error.getMessage());
-                //pDialog.hide();
+
             }
         });
 
-
         MyApplication.getInstance().addToRequestQueue(jsonObjReq);
     }
+
+
 
     private void setLike(int result)
     {
@@ -232,17 +258,47 @@ public class BoardItemViewActivity extends CycleControllerActivity implements Vi
     public void sendLikeData()
     {
         Map<String, String> param = new HashMap<String, String>();
-        param.put("user_id", MyApplication.result.getId());
         param.put("board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
+        param.put("user_id", ""+MyApplication.result.getId());
+
+        Log.e("value",""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id()+"/"+MyApplication.result.getId());
+
 
         String url = "http://125.209.193.163/pokemongo/createLike.jsp";
 
-        final CustomRequest<BoardItem> jsonObjReq = new CustomRequest<BoardItem>(Request.Method.POST, url, param,
+        final CustomRequest<BoardItem> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param,
                 BoardItem.class, //Not null.
                 new Response.Listener<BoardItem>() {
                     @Override
                     public void onResponse(BoardItem response) {
+                        Log.e("createLike", "isGood");
+                    }
+                }, new Response.ErrorListener() {
 
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ERROR", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+    public void createComment()
+    {
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("board_id", ""+MyApplication.boardItem.getBoardData().get(pos).getBoard_id());
+        param.put("user_id", ""+MyApplication.result.getId());
+        param.put("comment_info","테스트다");
+
+        String url = "http://125.209.193.163/pokemongo/createComment.jsp";
+
+        final CustomRequest<BoardItem> jsonObjReq = new CustomRequest<>(Request.Method.POST, url, param,
+                BoardItem.class, //Not null.
+                new Response.Listener<BoardItem>() {
+                    @Override
+                    public void onResponse(BoardItem response) {
+                        Log.e("createLike", "isGood");
                     }
                 }, new Response.ErrorListener() {
 
@@ -261,6 +317,10 @@ public class BoardItemViewActivity extends CycleControllerActivity implements Vi
         {
             case R.id.like_button:
                 increasingLike();
+                break;
+
+            case R.id.create_comments:
+                createComment();
                 break;
         }
     }
